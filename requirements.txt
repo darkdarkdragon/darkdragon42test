@@ -1,5 +1,5 @@
 Django >= 1.4, < 1.5
-django-annoying >= 0.7.6
+-e git://github.com/skorokithakis/django-annoying#egg=django-annoying
 django-tastypie==0.9.16
 django-cors-headers
 mock
