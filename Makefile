@@ -2,7 +2,7 @@ MANAGE=django-admin.py
 ROOT_DIR=`pwd`
 
 test:
-	. $(ROOT_DIR)/.env/bin/activate; PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=django_angular_backend.settings $(MANAGE) test 
+	PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=django_angular_backend.settings $(MANAGE) test 
 	cd django_angular_backend/static; npm run test-single-run
 run:
 	. $(ROOT_DIR)/.env/bin/activate; PYTHONPATH=`pwd` DJANGO_SETTINGS_MODULE=django_angular_backend.settings $(MANAGE) runserver
