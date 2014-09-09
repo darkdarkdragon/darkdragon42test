@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load static %}
+<!--[if lt IE 7]>      <html lang="en" ng-app="app" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="app" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="app" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="app" class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Angular test app</title>
+    <link rel="stylesheet" href="{% static "bower_components/html5-boilerplate/css/normalize.css" %}">
+    <link rel="stylesheet" href="{% static "app.css" %}">
+    <script type="text/javascript" src="{% static "bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js" %}"></script>
+
+    <script type="text/javascript" src="{% static "bower_components/angular/angular.js" %}"></script>
+    <script type="text/javascript" src="{% static "bower_components/angular-route/angular-route.js" %}"></script>
+    <script type="text/javascript" src="{% static "app.js" %}"></script>
+    <script type="text/javascript" src="{% static "app.mycontacts.js" %}"></script>
+  </head>
+  <body>
+    <div class="cont">
+      <div>
+          <span class="head" >My contact book</span>
+          <a style="margin-left: 50px;" href="/" >Main page</a>
+          <a href="#/contacts" >Contacts</a>
+      </div>
+      <my-app></my-app>
+    </div>
+  </body>
+</html>
