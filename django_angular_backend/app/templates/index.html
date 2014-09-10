@@ -18,6 +18,7 @@
     <script type="text/javascript" src="{% static "bower_components/angular-route/angular-route.js" %}"></script>
     <script type="text/javascript" src="{% static "app.js" %}"></script>
     <script type="text/javascript" src="{% static "app.mycontacts.js" %}"></script>
+    <script type="text/javascript" src="{% static "app.contacts.js" %}"></script>
   </head>
   <body>
     <div class="cont">
@@ -26,7 +27,7 @@
           <a style="margin-left: 50px;" href="/" >Main page</a>
           <a href="#/contacts" >Contacts</a>
       </div>
-      <my-app></my-app>
+      <div ng-view></div>
     </div>
   </body>
 </html>
