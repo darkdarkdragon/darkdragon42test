@@ -6,6 +6,7 @@ angular.module('app', [
   'ngRoute',
   'app.mycontacts',
   'app.contacts',
+  'app.contactform',
 ]).
 config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/', {

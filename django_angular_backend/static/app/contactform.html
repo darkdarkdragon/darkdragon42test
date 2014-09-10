@@ -1,0 +1,20 @@
+<div style="margin-top: 50px;" >
+  <strong><i>{{ contactForm.contact.first_name + ' ' + contactForm.contact.last_name }}</i></strong>
+  <div style="margin-top: 20px;" >
+    <form>
+      <table><tr><th
+        >Name:</th><td><input type="text" ng-model="contactForm.contact.first_name" ></td><th
+        >Last name:</th><td><input type="text" ng-model="contactForm.contact.last_name"  ></td></tr><tr><th
+        >Email:</th><td><input type="email" ng-model="contactForm.contact.email"  ></td><td colspan="2"></td></tr><tr><th
+        >Cell phone:</th><td><input type="text" ng-model="contactForm.contact.cellphone_number"  ></td><td colspan="2"></td></tr><tr><th
+        >Landline:</th><td><input type="text" ng-model="contactForm.contact.phone_number" ></td><td colspan="2"></td></tr><tr><th
+        >Birth date:</th><td><input type="text" ng-model="contactForm.contact.birth_date" ></td><td colspan="2"></td></tr><tr><th
+        >JID:</th><td><input type="text" ng-model="contactForm.contact.jabber_id" ></td><td colspan="2"></td></tr>
+      </table>
+      <div style="margin-top: 20px;" >
+        <button ng-disabled="contactForm.disabled" ng-click="contactForm.save()" >Save</button>
+      </div>
+    </form>
+    <a href="#/contacts" >< Back to all contacts</a>
+  </div>
+</div>
