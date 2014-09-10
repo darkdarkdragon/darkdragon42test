@@ -1,0 +1,15 @@
+<div>
+    <h3 style="margin-left: 10%" ><i>Contacts</i></h3>
+<table>
+  <thead>
+    <tr><th>Name:</th><th>Email:</th><th>Cell phone:</th><th>Landline:</th></tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="contact in contactsHolder.contacts" ><td
+    >{{ contact.first_name + ' ' + contact.last_name }}</td><td
+    >{{ contact.email }}</td><td
+    >{{ contact.cellphone_number }}</td><td
+    >{{ contact.phone_number }}</td></tr>
+  </tbody>
+</table>
+</div>
