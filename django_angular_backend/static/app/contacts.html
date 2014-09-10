@@ -1,15 +1,33 @@
 <div>
     <h3 style="margin-left: 10%" ><i>Contacts</i></h3>
-<table>
+  <div>
+    <form  autocomplete="off" >
+      <label>Order by:</label>
+      <select ng-model="contactsHolder.orderPop"  >
+        <option value="" ></option>
+        <option value="last_name" >Name</option>
+        <option value="email" >Email</option>
+        <option value="cellphone_number" >Cell phone</option>
+        <option value="phone_number" >Landline</option>
+      </select>
+      <label style="margin-left: 10px;"  >Search:</label>
+      <input ng-model="contactsHolder.query" type="text" placeholder="Filter by" autofocus  >
+    </form>
+  </div>
+  
+<table style="margin-top:20px;" >
   <thead>
     <tr><th>Name:</th><th>Email:</th><th>Cell phone:</th><th>Landline:</th></tr>
   </thead>
   <tbody>
-    <tr ng-repeat="contact in contactsHolder.contacts" ><td
+    <tr ng-repeat="contact in contactsHolder.contacts | filter:contactsHolder.query | orderBy:contactsHolder.orderPop |  offset: contactsHolder.currentPage * contactsHolder.pageSize | limitTo: contactsHolder.pageSize " ><td
     ><a href="{{ '#/contacts/' + contact.id }}" >{{ contact.first_name + ' ' + contact.last_name }}</a></td><td
     >{{ contact.email }}</td><td
-    >{{ contact.cellphone_number }}</td><td
-    >{{ contact.phone_number }}</td></tr>
+    >{{ contact.cellphone_number | phoneCountry }}</td><td
+    >{{ contact.phone_number | phoneCountry }}</td></tr>
+  <tfoot><tr><td></td><td colspan="2"></td><td></td></tr></tfoot>
   </tbody>
 </table>
+<div><a href ng-show="contactsHolder.leftEnabled"  ng-click="contactsHolder.back()" >&lt; Go back</a>
+     <a href ng-show="contactsHolder.rightEnabled" ng-click="contactsHolder.forth()" style="margin-left: 30%" >Next page &gt;</a></div>
 </div>
