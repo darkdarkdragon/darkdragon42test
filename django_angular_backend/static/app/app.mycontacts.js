@@ -2,17 +2,8 @@
 (function () {
 
 angular.module('app.mycontacts', [])
-.controller('MyContacts', MyContacts)
-.directive('myApp', MyAppDirective);
+.controller('MyContacts', MyContacts);
 
-function MyAppDirective() {
-    return {
-        restrict: 'E',
-        templateUrl: '/static/myapp.html',
-        controllerAs: 'my',
-        controller: 'MyContacts'
-    }
-}
 
 
 function MyContacts() {
