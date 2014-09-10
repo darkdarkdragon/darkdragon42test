@@ -1,18 +1,41 @@
 <div style="margin-top: 50px;" >
   <strong><i>{{ contactForm.contact.first_name + ' ' + contactForm.contact.last_name }}</i></strong>
   <div style="margin-top: 20px;" >
-    <form>
-      <table><tr><th
-        >Name:</th><td><input type="text" ng-model="contactForm.contact.first_name" ></td><th
-        >Last name:</th><td><input type="text" ng-model="contactForm.contact.last_name"  ></td></tr><tr><th
-        >Email:</th><td><input type="email" ng-model="contactForm.contact.email"  ></td><td colspan="2"></td></tr><tr><th
-        >Cell phone:</th><td><input type="text" ng-model="contactForm.contact.cellphone_number"  ></td><td colspan="2"></td></tr><tr><th
-        >Landline:</th><td><input type="text" ng-model="contactForm.contact.phone_number" ></td><td colspan="2"></td></tr><tr><th
-        >Birth date:</th><td><input type="text" ng-model="contactForm.contact.birth_date" ></td><td colspan="2"></td></tr><tr><th
-        >JID:</th><td><input type="text" ng-model="contactForm.contact.jabber_id" ></td><td colspan="2"></td></tr>
+    <form name="form" class="css-form" novalidate >
+      <table>
+        <tr>
+          <th>Name:</th>
+          <td><input type="text" name="uName" ng-model="contactForm.contact.first_name" required ></td>
+          <td colspan="2" ><span ng-show="form.uName.$dirty && form.uName.$invalid" >* Required field</span></td>
+        </tr><tr>
+          <th>Last name:</th>
+          <td><input type="text" ng-model="contactForm.contact.last_name"  ></td>
+          <td colspan="2"></td>
+        </tr><tr>
+          <th>Email:</th>
+          <td><input type="email" ng-model="contactForm.contact.email"  ></td>
+          <td colspan="2"></td>
+        </tr><tr>
+          <th>Cell phone:</th>
+          <td><input name="uCell" type="text" ng-model="contactForm.contact.cellphone_number" ng-pattern="/^\+\d{11,15}$/" ng-minlength="12" ng-maxlength="16" maxlength="16" ></td>
+          <td colspan="2"><span ng-show="form.uCell.$dirty && form.uCell.$invalid" >* Value must start with `+` and contains 11 numbers</span></td>
+        </tr><tr>
+          <th>Landline:</th>
+          <td><input name="uLand" type="text" ng-model="contactForm.contact.phone_number" ng-pattern="/^\+\d{11,15}$/" ng-minlength="12" ng-maxlength="16" maxlength="16"  ></td>
+          <td colspan="2"><span ng-show="form.uLand.$dirty && form.uLand.$invalid" >* Value must start with `+` and contains 11 numbers</span></td>
+        </tr><tr>
+          <th>Birth date:</th>
+          <td><input type="text" ng-model="contactForm.contact.birth_date" ></td>
+          <td colspan="2"></td>
+        </tr><tr>
+          <th>JID:</th>
+          <td><input type="text" ng-model="contactForm.contact.jabber_id" ></td>
+          <td colspan="2"></td>
+        </tr>
       </table>
       <div style="margin-top: 20px;" >
-        <button ng-disabled="contactForm.disabled" ng-click="contactForm.save()" >Save</button>
+        <button ng-disabled="form.$invalid || contactForm.disabled" ng-click="contactForm.save()" >Save</button><span 
+            style="margin-left: 10px;" ng-show="form.$dirty && form.$invalid" class="error_text" >Has errors</span>
       </div>
     </form>
     <a href="#/contacts" >&lt; Back to all contacts</a>
