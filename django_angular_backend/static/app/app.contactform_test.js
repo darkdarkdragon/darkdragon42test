@@ -9,22 +9,42 @@ describe('app.contactform module', function() {
     describe('ContactForm controller', function() {
         var $httpBackend;
         var createController;
+        var scope;
 
-        beforeEach(inject(function($injector) {
+        beforeEach(inject(function($rootScope, $injector) {
             // Set up the mock http service responses
             $httpBackend = $injector.get('$httpBackend');
 
-            // The $controller service is used to create instances of controllers
+            scope = $rootScope.$new();
+
             var $controller = $injector.get('$controller');
 
             createController = function(contactId) {
-                return $controller('ContactForm', { $routeParams : { contactId : contactId }});
+                return $controller('ContactForm', { $scope: scope, $routeParams : { contactId : contactId }});
             };
         }));
 
         afterEach(function() {
             $httpBackend.verifyNoOutstandingExpectation();
             $httpBackend.verifyNoOutstandingRequest();
+        });
+
+        it('should check for birthday', function() {
+
+            var requestHandler = $httpBackend.expectGET('/api/v1/contact/2')
+                                  .respond({id: 2, first_name: 'Ivan', cellphone_number: '103', birth_date: 'hack' });
+            var controller = createController(2);
+            $httpBackend.flush();
+            scope.$digest();
+
+            expect(controller.isBirthDay).toBe(false);
+
+            controller.todayStr = '2011-12-31';
+            controller.contact.birth_date = '2011-12-31';
+            scope.$digest();
+
+            expect(controller.isBirthDay).toBe(true);
+
         });
 
         it('should get data right', function() {
