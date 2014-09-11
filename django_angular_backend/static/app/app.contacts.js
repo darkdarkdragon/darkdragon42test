@@ -40,7 +40,7 @@ function Contacts($http) {
 
     var self = this;
     $http.get('/api/v1/contact').success(function(data) {
-        if (data != null && data.objects != null && angular.isArray(data.objects)) {
+        if (data !== null && data.objects !== null && angular.isArray(data.objects)) {
             self.contacts = data.objects;
         } else {
             self.contacts = [];
@@ -56,19 +56,19 @@ function Contacts($http) {
             this.currentPage -= 1;
         }
         this.setEnabledState();
-    }
+    };
 
     this.forth = function() {
         if ((this.currentPage + 1) * this.pageSize < this.contacts.length) {
             this.currentPage += 1;
         }
         this.setEnabledState();
-    }
+    };
 
     this.setEnabledState = function() {
         this.leftEnabled  = this.currentPage > 0;
         this.rightEnabled = (this.currentPage + 1) * this.pageSize < this.contacts.length;
-    }
+    };
 }
 
 

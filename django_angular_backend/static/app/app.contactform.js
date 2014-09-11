@@ -21,7 +21,7 @@ function ContactForm($http, $routeParams) {
         this.contact.id = parseInt($routeParams.contactId);
         var self = this;
         $http.get('/api/v1/contact/' + this.contact.id).success(function(data) {
-            if (data != null && data.id === self.contact.id) {
+            if (data !== null && data.id === self.contact.id) {
                 self.contact = data;
                 self.disabled = false;
             }
@@ -37,7 +37,7 @@ function ContactForm($http, $routeParams) {
             var self = this;
             $http.put('/api/v1/contact/' + self.contact.id, self.contact);
         }
-    }
+    };
 
 }
 
