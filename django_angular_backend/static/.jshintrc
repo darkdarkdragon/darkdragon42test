@@ -1,5 +1,6 @@
 {
   "globalstrict": true,
+  "indent": 4,
   "globals": {
     "angular": false,
     "describe": false,
