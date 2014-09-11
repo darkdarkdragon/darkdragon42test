@@ -1,45 +1,42 @@
 'use strict';
-(function () {
+(function() {
 
-angular.module('app.contactform', ['ngRoute'])
-.controller('ContactForm', ['$http', '$routeParams', ContactForm])
+    angular.module('app.contactform', ['ngRoute'])
+    .controller('ContactForm', ['$http', '$routeParams', 'Contact', ContactForm])
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/contacts/:contactId', {
-    templateUrl: '/static/contactform.html',
-    controller: 'ContactForm',
-    controllerAs: 'contactForm'
-  });
-}]);
-
-
-
-function ContactForm($http, $routeParams) {
-    this.disabled = true;
-    this.contact = {};
-    if (!isNaN(parseInt($routeParams.contactId))) {
-        this.contact.id = parseInt($routeParams.contactId);
-        var self = this;
-        $http.get('/api/v1/contact/' + this.contact.id).success(function(data) {
-            if (data != null && data.id === self.contact.id) {
-                self.contact = data;
-                self.disabled = false;
-            }
-        }).error(function(data, status, headers, config) {
-            if (status == 404) {
-                self.disabled = false;
-            }
+    .config(['$routeProvider', function($routeProvider) {
+        $routeProvider.when('/contacts/:contactId', {
+            templateUrl: '/static/contactform.html',
+            controller: 'ContactForm',
+            controllerAs: 'contactForm'
         });
-    }
+    }]);
 
-    this.save = function() {
-        if (!this.disabled) {
+    function ContactForm($http, $routeParams, Contact) {
+        this.disabled = true;
+        this.contact = {};
+        if (!isNaN(parseInt($routeParams.contactId))) {
+            var _id = parseInt($routeParams.contactId);
+            this.contact.id = _id;
             var self = this;
-            $http.put('/api/v1/contact/' + self.contact.id, self.contact);
+            this.contact = Contact.get({ contactId: this.contact.id }, function(u, getResponseHeaders) {
+                if (u.id === _id) {
+                    self.disabled = false;
+                }
+            }, function(response) {
+                if (response.status == 404) {
+                    self.disabled = false;
+                    self.contact.id = parseInt($routeParams.contactId);
+                }
+            });
         }
+
+        this.save = function() {
+            if (!this.disabled) {
+                Contact.update({ contactId: this.contact.id }, this.contact);
+            }
+        };
+
     }
-
-}
-
 
 })();

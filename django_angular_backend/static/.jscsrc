@@ -1,0 +1,20 @@
+{
+"preset": "google",
+"fileExtensions": [ ".js", "jscs" ],
+"requireParenthesesAroundIIFE": true,
+"maximumLineLength": 180,
+"validateLineBreaks": "LF",
+"validateIndentation": 4,
+"disallowKeywords": ["with"],
+"disallowSpacesInsideObjectBrackets": null,
+"disallowImplicitTypeConversion": ["string"],
+"safeContextKeyword": ["self", "vm"],
+"excludeFiles": [
+"app/bower_components/**",
+"node_modules/**",
+// this file tests that snake cased configs are detected
+// which violates the camelcase identifier rule
+// TODO: remove when inline error exclusions exist
+"test/rules/camel-case-options.js"
+]
+}

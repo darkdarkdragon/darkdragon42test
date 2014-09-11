@@ -1,8 +1,10 @@
 'use strict';
 
+//jscs:disable requireCamelCaseOrUpperCaseIdentifiers
 describe('app.contacts module', function() {
 
     beforeEach(module('app.contacts'));
+    beforeEach(module('app.services'));
 
     describe('Offset fliter', function() {
         it('should be', inject(function($filter) {
@@ -14,7 +16,7 @@ describe('app.contacts module', function() {
             expect(filter([], 0)).toEqual([]);
             expect(filter([], 10)).toEqual([]);
             expect(filter([1], 1)).toEqual([]);
-            expect(filter([1,2], 1)).toEqual([2]);
+            expect(filter([1, 2], 1)).toEqual([2]);
         }));
 
     });
@@ -65,7 +67,7 @@ describe('app.contacts module', function() {
             expect(controller.rightEnabled).toBe(false);
             expect(controller.currentPage).toBe(0);
 
-            controller.contacts = [1,2,3, 4];
+            controller.contacts = [1, 2, 3, 4];
             controller.pageSize = 3;
             controller.setEnabledState();
             expect(controller.leftEnabled).toBe(false);
@@ -87,31 +89,29 @@ describe('app.contacts module', function() {
     });
 
     describe('Contacts controller', function() {
-        var $httpBackend, createController;
+        var $httpBackend;
+        var createController;
 
         beforeEach(inject(function($injector) {
-           // Set up the mock http service responses
-           $httpBackend = $injector.get('$httpBackend');
+            // Set up the mock http service responses
+            $httpBackend = $injector.get('$httpBackend');
 
-           // The $controller service is used to create instances of controllers
-           var $controller = $injector.get('$controller');
+            // The $controller service is used to create instances of controllers
+            var $controller = $injector.get('$controller');
 
-           createController = function() {
-             return $controller('Contacts');
-           };
+            createController = function() {
+                return $controller('Contacts');
+            };
         }));
 
+        afterEach(function() {
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+        });
 
-       afterEach(function() {
-         $httpBackend.verifyNoOutstandingExpectation();
-         $httpBackend.verifyNoOutstandingRequest();
-       });
-
-       it('should get data right', function() {
-
-           var requestHandler = $httpBackend.expectGET('/api/v1/contact')
+        it('should get data right', function() {
+            var requestHandler = $httpBackend.expectGET('/api/v1/contact')
                                   .respond({objects: [{first_name: 'Ivan'}, {cellphone_number: '103'}] });
-
 
             var controller = createController();
             $httpBackend.flush();
@@ -120,9 +120,10 @@ describe('app.contacts module', function() {
             expect(controller.contacts.length).toBe(2);
             expect(controller.contacts[0].first_name).toBe('Ivan');
             expect(controller.contacts[1].cellphone_number).toBe('103');
-       });
-       it('should handle invalid data', function() {
-           var requestHandler = $httpBackend.expectGET('/api/v1/contact')
+        });
+
+        it('should handle invalid data', function() {
+            var requestHandler = $httpBackend.expectGET('/api/v1/contact')
                                   .respond({objects: 1 });
 
             var controller = createController();
@@ -130,9 +131,10 @@ describe('app.contacts module', function() {
 
             expect(controller.contacts).toBeDefined();
             expect(controller.contacts.length).toBe(0);
-       });
-       it('should handle invalid data 2', function() {
-           var requestHandler = $httpBackend.expectGET('/api/v1/contact')
+        });
+
+        it('should handle invalid data 2', function() {
+            var requestHandler = $httpBackend.expectGET('/api/v1/contact')
                                   .respond({no_objects: 1 });
 
             var controller = createController();
@@ -140,9 +142,10 @@ describe('app.contacts module', function() {
 
             expect(controller.contacts).toBeDefined();
             expect(controller.contacts.length).toBe(0);
-       });
-       it('should handle invalid data 3', function() {
-           var requestHandler = $httpBackend.expectGET('/api/v1/contact')
+        });
+
+        it('should handle invalid data 3', function() {
+            var requestHandler = $httpBackend.expectGET('/api/v1/contact')
                                   .respond(null);
 
             var controller = createController();
@@ -150,17 +153,18 @@ describe('app.contacts module', function() {
 
             expect(controller.contacts).toBeDefined();
             expect(controller.contacts.length).toBe(0);
-       });
-       it('should handle http error', function() {
-           var requestHandler = $httpBackend.expectGET('/api/v1/contact')
-                                  .respond(403, '');
+        });
+
+        it('should handle http error', function() {
+            var requestHandler = $httpBackend.expectGET('/api/v1/contact')
+                                  .respond(403);
 
             var controller = createController();
             $httpBackend.flush();
 
             expect(controller.contacts).toBeDefined();
             expect(controller.contacts.length).toBe(0);
-       });
+        });
 
     });
 });
