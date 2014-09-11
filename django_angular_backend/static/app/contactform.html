@@ -25,8 +25,8 @@
           <td colspan="2"><span ng-show="form.uLand.$dirty && form.uLand.$invalid" >* Value must start with `+` and contains 11 numbers</span></td>
         </tr><tr>
           <th>Birth date:</th>
-          <td><input type="text" ng-model="contactForm.contact.birth_date" ></td>
-          <td colspan="2"></td>
+          <td><input type="text" ng-model="contactForm.contact.birth_date" id="datepicker" date-picker maxlength="10" ></td>
+          <td colspan="2"><span class="" ng-show="contactForm.isBirthDay" >Congratulations! It is you birthday today!</span></td>
         </tr><tr>
           <th>JID:</th>
           <td><input type="text" ng-model="contactForm.contact.jabber_id" ></td>
