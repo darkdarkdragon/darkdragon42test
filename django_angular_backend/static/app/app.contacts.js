@@ -2,7 +2,7 @@
 (function() {
 
     angular.module('app.contacts', ['ngRoute'])
-    .controller('Contacts', ['$http', Contacts])
+    .controller('Contacts', ['$http', 'Contact', Contacts])
     .filter('offset', Offset)
     .filter('phoneCountry', PhoneCountry)
     .config(['$routeProvider', function($routeProvider) {
@@ -29,7 +29,7 @@
         };
     }
 
-    function Contacts($http) {
+    function Contacts($http, Contact) {
         this.contacts = [];
         this.query = '';
         this.orderPop = '';
@@ -39,14 +39,9 @@
         this.rightEnabled = false;
 
         var self = this;
-        $http.get('/api/v1/contact').success(function(data) {
-            if (data !== null && data.objects !== null && angular.isArray(data.objects)) {
-                self.contacts = data.objects;
-            } else {
-                self.contacts = [];
-            }
+        this.contacts = Contact.query({}, function(u) {
             self.setEnabledState();
-        }).error(function(data, status, headers, config) {
+        }, function(response) {
             self.contacts = [];
             self.setEnabledState();
         });

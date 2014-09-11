@@ -5,6 +5,7 @@
     // Declare app level module which depends on views, and components
     angular.module('app', [
         'ngRoute',
+        'app.services',
         'app.mycontacts',
         'app.contacts',
         'app.contactform',

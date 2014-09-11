@@ -4,6 +4,7 @@
 describe('app.contactform module', function() {
 
     beforeEach(module('app.contactform'));
+    beforeEach(module('app.services'));
 
     describe('ContactForm controller', function() {
         var $httpBackend;
@@ -73,10 +74,10 @@ describe('app.contactform module', function() {
         });
 
         it('should handle invalid data', function() {
-            var requestHandler = $httpBackend.expectGET('/api/v1/contact/2')
+            var requestHandler = $httpBackend.expectGET('/api/v1/contact/83')
                                   .respond({});
 
-            var controller = createController(2);
+            var controller = createController(83);
             $httpBackend.flush();
 
             expect(controller.disabled).toBe(true);

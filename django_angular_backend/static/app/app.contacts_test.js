@@ -4,6 +4,7 @@
 describe('app.contacts module', function() {
 
     beforeEach(module('app.contacts'));
+    beforeEach(module('app.services'));
 
     describe('Offset fliter', function() {
         it('should be', inject(function($filter) {
@@ -156,7 +157,7 @@ describe('app.contacts module', function() {
 
         it('should handle http error', function() {
             var requestHandler = $httpBackend.expectGET('/api/v1/contact')
-                                  .respond(403, '');
+                                  .respond(403);
 
             var controller = createController();
             $httpBackend.flush();
