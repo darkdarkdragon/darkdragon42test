@@ -9,6 +9,7 @@
         'app.mycontacts',
         'app.contacts',
         'app.contactform',
+        'app.latestadded',
     ]).
     config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/', {

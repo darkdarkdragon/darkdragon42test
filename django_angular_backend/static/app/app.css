@@ -21,3 +21,18 @@ td {
 
 .error_text {
 }
+
+.latest_added {
+    float: right;
+    margin-right: 10%;
+}
+
+.latest_contact {
+    border: solid 1px black;
+    padding: 10px;
+}
+.latest_phone {
+    margin-top: 5px;
+}
+.latest_contact_name {
+}
