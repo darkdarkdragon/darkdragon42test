@@ -2,7 +2,7 @@
 (function() {
 
     angular.module('app.contacts', ['ngRoute'])
-    .controller('Contacts', ['$http', 'Contact', Contacts])
+    .controller('Contacts', ['Contact', Contacts])
     .filter('offset', Offset)
     .filter('phoneCountry', PhoneCountry)
     .config(['$routeProvider', function($routeProvider) {
@@ -29,7 +29,7 @@
         };
     }
 
-    function Contacts($http, Contact) {
+    function Contacts(Contact) {
         this.contacts = [];
         this.query = '';
         this.orderPop = '';

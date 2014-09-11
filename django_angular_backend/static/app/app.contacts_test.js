@@ -93,10 +93,8 @@ describe('app.contacts module', function() {
         var createController;
 
         beforeEach(inject(function($injector) {
-            // Set up the mock http service responses
             $httpBackend = $injector.get('$httpBackend');
 
-            // The $controller service is used to create instances of controllers
             var $controller = $injector.get('$controller');
 
             createController = function() {
