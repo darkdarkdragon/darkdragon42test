@@ -1,0 +1,7 @@
+<div>
+  <h4>Latest added contacts!</h4>
+    <div class="latest_contact" ng-repeat="contact in latestAddedcontroller.contacts | orderBy:'-date_created' | limitTo:3 " >
+      <div class="latest_contact_name" >{{ contact.first_name + ' ' + contact.last_name }}</div>
+      <div class="latest_phone" ><i>{{ contact.phone_number || contact.cellphone_number || 'No number' }}</i></div>
+    </div>
+</div>

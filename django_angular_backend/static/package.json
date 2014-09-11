@@ -11,7 +11,8 @@
     "http-server": "^0.6.1",
     "bower": "^1.3.1",
     "shelljs": "^0.2.6",
-    "karma-junit-reporter": "^0.2.2"
+    "karma-junit-reporter": "^0.2.2",
+    "karma-ng-html2js-preprocessor": "*"
   },
   "scripts": {
     "postinstall": "bower install",
@@ -19,7 +20,6 @@
     "prestart": "npm install",
     "start": "http-server -a localhost -p 8000 -c-1",
 
-    "pretest": "npm install && jshint app && jscs app",
     "test": "karma start karma.conf.js",
     "test-single-run": "karma start karma.conf.js  --single-run",
 
