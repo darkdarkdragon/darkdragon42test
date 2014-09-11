@@ -39,8 +39,9 @@ describe('app.contactform module', function() {
 
             expect(controller.isBirthDay).toBe(false);
 
-            controller.todayStr = '2011-12-31';
-            controller.contact.birth_date = '2011-12-31';
+            controller.todayMonth = 11;
+            controller.todayDay = 31;
+            controller.contact.birth_date = '2001-12-31';
             scope.$digest();
 
             expect(controller.isBirthDay).toBe(true);
