@@ -8,7 +8,8 @@ module.exports = function(config){
       'app/bower_components/angular-route/angular-route.js',
       'app/bower_components/angular-resource/angular-resource.js',
       'app/bower_components/angular-mocks/angular-mocks.js',
-      'app/*.js'
+      'app/*.js',
+      'app/*.html'
     ],
 
     autoWatch : true,
@@ -21,12 +22,27 @@ module.exports = function(config){
             'karma-chrome-launcher',
             'karma-phantomjs-launcher',
             'karma-jasmine',
-            'karma-junit-reporter'
+            'karma-junit-reporter',
+            'karma-ng-html2js-preprocessor'
             ],
 
     junitReporter : {
       outputFile: 'test_out/unit.xml',
       suite: 'unit'
+    },
+
+    preprocessors: {
+      'app/*.html': 'ng-html2js'
+    },
+
+    ngHtml2JsPreprocessor: {
+      // If your build process changes the path to your templates,
+      // use stripPrefix and prependPrefix to adjust it.
+      stripPrefix: "app/",
+      prependPrefix: "/static/",
+
+      // the name of the Angular module to create
+      moduleName: "my.templates"
     }
 
   });
