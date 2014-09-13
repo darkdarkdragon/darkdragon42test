@@ -1,5 +1,8 @@
 .env
 *.pyc
 *.sqlite3
+npm-debug.log
 node_modules/
 bower_components/
+npm_cache/
+bower_cache/

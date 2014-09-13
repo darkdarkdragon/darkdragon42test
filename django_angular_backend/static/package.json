@@ -15,15 +15,15 @@
     "karma-ng-html2js-preprocessor": "*"
   },
   "scripts": {
-    "postinstall": "bower install",
+    "no-postinstall": "bower install",
 
     "prestart": "npm install",
     "start": "http-server -a localhost -p 8000 -c-1",
 
-    "dev-test": "karma start karma.conf.js",
-    "dev-test-single-run": "karma start karma.conf.js  --single-run",
-    "pretest": "npm install",
-    "test": "karma start karma.barista.conf.js  --single-run",
+    "pretest": "npm install && jshint app && jscs app",
+    "test": "karma start karma.conf.js",
+    "test-single-run": "karma start karma.conf.js  --single-run",
+    "test-barista": "karma start karma.barista.conf.js  --single-run",
 
     "preupdate-webdriver": "npm install",
     "update-webdriver": "webdriver-manager update",
