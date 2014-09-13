@@ -22,7 +22,8 @@
 
     function PhoneCountry() {
         return function(value) {
-            if (typeof value == 'string' && value.trimLeft().startsWith('+1')) {
+            var re = /^\s*[+]1.*/;
+            if (typeof value == 'string' && re.test(value)) {
                 return 'USA ' + value;
             }
             return value;
