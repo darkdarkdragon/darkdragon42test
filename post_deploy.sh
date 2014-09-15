@@ -13,6 +13,7 @@ cd ../..
 #echo "Script executed from: ${PWD}"
 #
 #
+# 3
 
 ../uwsgi/post_deploy.sh "$@"
 
