@@ -2,7 +2,7 @@
 (function() {
 
     angular.module('app.contacts', ['ngRoute'])
-    .controller('Contacts', ['Contact', Contacts])
+    .controller('Contacts', ['$filter', '$scope', 'Contact', Contacts])
     .filter('offset', Offset)
     .filter('phoneCountry', PhoneCountry)
     .config(['$routeProvider', function($routeProvider) {
@@ -30,8 +30,11 @@
         };
     }
 
-    function Contacts(Contact) {
+    function Contacts($filter, $scope, Contact) {
+        var self = this;
+
         this.contacts = [];
+        this.contactsFiltered = [];
         this.query = '';
         this.orderPop = '';
         this.currentPage = 0;
@@ -39,8 +42,8 @@
         this.leftEnabled = false;
         this.rightEnabled = false;
 
-        var self = this;
         this.contacts = Contact.query({}, function(u) {
+            self.contactsFiltered = $filter('filter')(u);
             self.setEnabledState();
         }, function(response) {
             self.contacts = [];
@@ -55,16 +58,29 @@
         };
 
         this.forth = function() {
-            if ((this.currentPage + 1) * this.pageSize < this.contacts.length) {
+            if ((this.currentPage + 1) * this.pageSize < this.contactsFiltered.length) {
                 this.currentPage += 1;
             }
             this.setEnabledState();
         };
 
         this.setEnabledState = function() {
-            this.leftEnabled  = this.currentPage > 0;
-            this.rightEnabled = (this.currentPage + 1) * this.pageSize < this.contacts.length;
+            var pages = Math.ceil(self.contactsFiltered.length / self.pageSize);
+            var t1 = (self.currentPage + 1);
+            if (self.currentPage > 0 && (self.currentPage + 1) > pages) {
+                self.currentPage = 0;
+            }
+            self.leftEnabled  = self.currentPage > 0;
+            self.rightEnabled = (self.currentPage + 1) * self.pageSize < self.contactsFiltered.length;
         };
+
+        $scope.$watch(function() {
+            return self.query;
+        }, function(newValue, oldValue) {
+            self.contactsFiltered = $filter('filter')(self.contacts, newValue);
+            self.setEnabledState();
+        });
+
     }
 
 })();
