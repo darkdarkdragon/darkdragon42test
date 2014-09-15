@@ -20,7 +20,7 @@
     <tr><th>Name:</th><th>Email:</th><th>Cell phone:</th><th>Landline:</th></tr>
   </thead>
   <tbody>
-    <tr ng-repeat="contact in contactsHolder.contacts | filter:contactsHolder.query | orderBy:contactsHolder.orderPop |  offset: contactsHolder.currentPage * contactsHolder.pageSize | limitTo: contactsHolder.pageSize " ><td
+    <tr ng-repeat="contact in contactsHolder.contactsFiltered | orderBy:contactsHolder.orderPop |  offset: contactsHolder.currentPage * contactsHolder.pageSize | limitTo: contactsHolder.pageSize " ><td
     ><a href="{{ '#/contacts/' + contact.id }}" >{{ contact.first_name + ' ' + contact.last_name }}</a></td><td
     >{{ contact.email }}</td><td
     >{{ contact.cellphone_number | phoneCountry }}</td><td

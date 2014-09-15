@@ -38,14 +38,26 @@ describe('app.contacts module', function() {
     });
 
     describe('Contacts controller pagination', function() {
+        var scope;
+        var controller;
+
+        beforeEach(inject(function($rootScope, $injector) {
+
+            scope = $rootScope.$new();
+
+            var $controller = $injector.get('$controller');
+
+            controller = $controller('Contacts', { $scope: scope });
+        }));
+
         it('should have filter and order vars', inject(function($controller) {
-            var controller = $controller('Contacts');
+            //var controller = $controller('Contacts');
             expect(controller.query).toBeDefined();
             expect(controller.orderPop).toBeDefined();
         }));
 
         it('should have pagination vars', inject(function($controller) {
-            var controller = $controller('Contacts');
+            //var controller = $controller('Contacts');
             expect(controller.pageSize).toBeDefined();
             expect(controller.pageSize).toBe(2);
             expect(controller.currentPage).toBeDefined();
@@ -57,7 +69,7 @@ describe('app.contacts module', function() {
         }));
 
         it('should disable right/left buttons when needed', inject(function($controller) {
-            var controller = $controller('Contacts');
+            //var controller = $controller('Contacts');
             controller.back();
             expect(controller.leftEnabled).toBe(false);
             expect(controller.rightEnabled).toBe(false);
@@ -66,9 +78,42 @@ describe('app.contacts module', function() {
             expect(controller.leftEnabled).toBe(false);
             expect(controller.rightEnabled).toBe(false);
             expect(controller.currentPage).toBe(0);
+        }));
 
-            controller.contacts = [1, 2, 3, 4];
+    });
+
+    describe('Contacts controller', function() {
+        var $httpBackend;
+        var createController;
+        var scope;
+
+        beforeEach(inject(function($rootScope, $injector) {
+            scope = $rootScope.$new();
+
+            $httpBackend = $injector.get('$httpBackend');
+
+            var $controller = $injector.get('$controller');
+
+            createController = function() {
+                return $controller('Contacts', { $scope: scope });
+            };
+        }));
+
+        afterEach(function() {
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+        });
+
+        it('should disable right/left buttons when needed 2', inject(function($controller) {
+            var requestHandler = $httpBackend.expectGET('/api/v1/contact')
+                                  .respond({objects: [1, 2, 3, 4]});
+
+            var controller = createController();
+            $httpBackend.flush();
+
             controller.pageSize = 3;
+            //controller.contacts = [1, 2, 3, 4];
+            scope.$digest();
             controller.setEnabledState();
             expect(controller.leftEnabled).toBe(false);
             expect(controller.rightEnabled).toBe(true);
@@ -86,26 +131,28 @@ describe('app.contacts module', function() {
             expect(controller.currentPage).toBe(0);
 
         }));
-    });
 
-    describe('Contacts controller', function() {
-        var $httpBackend;
-        var createController;
+        it('should handle pagination right when filtered', inject(function($controller) {
+            var requestHandler = $httpBackend.expectGET('/api/v1/contact')
+                                  .respond({objects: [1, 2, 2, 2, 3, 4]});
 
-        beforeEach(inject(function($injector) {
-            $httpBackend = $injector.get('$httpBackend');
+            var controller = createController();
+            $httpBackend.flush();
 
-            var $controller = $injector.get('$controller');
+            controller.query = '2';
+            scope.$digest();
 
-            createController = function() {
-                return $controller('Contacts');
-            };
+            expect(controller.leftEnabled).toBe(false);
+            expect(controller.rightEnabled).toBe(true);
+            controller.forth();
+            expect(controller.leftEnabled).toBe(true);
+            expect(controller.rightEnabled).toBe(false);
+            expect(controller.currentPage).toBe(1);
+            controller.back();
+            expect(controller.leftEnabled).toBe(false);
+            expect(controller.rightEnabled).toBe(true);
+            expect(controller.currentPage).toBe(0);
         }));
-
-        afterEach(function() {
-            $httpBackend.verifyNoOutstandingExpectation();
-            $httpBackend.verifyNoOutstandingRequest();
-        });
 
         it('should get data right', function() {
             var requestHandler = $httpBackend.expectGET('/api/v1/contact')
