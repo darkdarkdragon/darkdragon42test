@@ -11,7 +11,7 @@ node node_modules/bower/bin/bower install -V --config.interactive=false
 
 cd ../..
 #echo "Script executed from: ${PWD}"
-# 8
+# 9
 #
 
 ../uwsgi/post_deploy.sh "$@"
