@@ -7,7 +7,7 @@ npm --cache npm_cache install
 export XDG_CACHE_HOME=bower_cache/cache
 export XDG_CONFIG_HOME=bower_cache/config
 export XDG_DATA_HOME=bower_cache/data
-node node_modules/bower/bin/bower install -V --config.interactive=false
+node node_modules/bower/bin/bower install --config.interactive=false
 
 cd ../..
 #echo "Script executed from: ${PWD}"
